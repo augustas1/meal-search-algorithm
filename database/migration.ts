@@ -1,12 +1,11 @@
-import { Client } from 'pg'
 import { readFileSync } from 'fs'
 import { getSeedQuery } from './seed';
+import { connectDatabaseClient } from './client';
 
 const schema = readFileSync('database/schema.sql', { encoding: 'utf8' });
 
 const migrate = async () => {
-    const client = new Client({ database: 'postgres' });
-    await client.connect();
+    const client = await connectDatabaseClient();
 
     const seedQuery = getSeedQuery();
     await client.query(`${schema}${seedQuery}`);

@@ -2,7 +2,6 @@ import { parse } from 'csv-parse/sync';
 import { readFileSync } from 'fs';
 import format from 'pg-format';
 
-
 export const getSeedQuery = () => {
     const insertStatements = Object.entries(tableToSeedFileMap).map(([table, file]) => {
         const data = readFileSync(file, { encoding: 'utf-8' });

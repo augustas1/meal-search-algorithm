@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "start": "ts-node index.ts",
     "migrate": "ts-node database/migration.ts"
   },
   "dependencies": {
