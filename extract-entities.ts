@@ -1,5 +1,6 @@
 import { connectDatabaseClient } from "./database/client";
 import format from 'pg-format';
+import { Table } from "./database/tables";
 
 export const extractEntities = async (searchTerm: string) => {
     const client = await connectDatabaseClient();
@@ -11,8 +12,8 @@ export const extractEntities = async (searchTerm: string) => {
 
     const query = selects.join(' UNION ');
     const results = await client.query(query)
-
     await client.end();
+
     const combinations = getCombinations(results.rows);
     return mapResultObjects(combinations);
 };
@@ -85,16 +86,19 @@ const mapResultObjects = (combinations: MatchedEntity[][]) => {
     })
 };
 
-const tableToEntityMap: Record<string, string> = {
-    'brands': 'brand',
-    'cities': 'city',
-    'diets': 'diet',
-    'dish_types': 'dishType',
+const tableToEntityMap: Record<Table, string> = {
+    [Table.Brands]: 'brand',
+    [Table.Cities]: 'city',
+    [Table.Diets]: 'diet',
+    [Table.DishTypes]: 'dishType',
 };
 
-interface MatchedEntity {
+interface Entity {
     id: number;
     name: string;
+}
+
+interface MatchedEntity extends Entity {
     type: string;
     word: string;
 };
@@ -105,4 +109,4 @@ interface GroupedEntities {
 };
 
 type EntityMap = { [key: string]: MatchedEntity[] };
-type ResultObject = { [key: string]: { id: number; name: string; } };
+type ResultObject = { [key: string]: Entity };

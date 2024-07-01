@@ -1,6 +1,7 @@
 import { parse } from 'csv-parse/sync';
 import { readFileSync } from 'fs';
 import format from 'pg-format';
+import { Table } from './tables';
 
 export const getSeedQuery = () => {
     const insertStatements = Object.entries(tableToSeedFileMap).map(([table, file]) => {
@@ -14,9 +15,10 @@ export const getSeedQuery = () => {
 
 const seedDirectory = 'database/seed/';
 
-const tableToSeedFileMap: Record<string, string> = {
-    'brands': `${seedDirectory}/brands.csv`,
-    'cities': `${seedDirectory}/cities.csv`,
-    'diets': `${seedDirectory}/diets.csv`,
-    'dish_types': `${seedDirectory}/dish-types.csv`,
+const tableToSeedFileMap: Record<Table, string> = {
+    [Table.Brands]: `${seedDirectory}/brands.csv`,
+    [Table.Cities]: `${seedDirectory}/cities.csv`,
+    [Table.Diets]: `${seedDirectory}/diets.csv`,
+    [Table.DishTypes]: `${seedDirectory}/dish-types.csv`,
 };
+
