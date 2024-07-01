@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "migrate": "ts-node database/migration.ts"
+  },
+  "dependencies": {
+    "csv-parse": "^5.5.6",
+    "pg": "^8.12.0",
+    "pg-format": "^1.0.4",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.6",
+    "@types/pg-format": "^1.0.5"
+  }
+}
